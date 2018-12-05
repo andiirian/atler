@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('users/dashboard');
 });
-router.get('/withdraw', (req, res, next) =>{
+router.get('/withdraw/:id', (req, res, next) =>{
   res.render('users/withdraw')
 })
 router.get('/deposit', (req, res, next) =>{
