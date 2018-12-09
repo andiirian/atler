@@ -1,15 +1,18 @@
-var mysqlModel = require('mysql-model');
-var MyAppModel = mysqlModel.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'alpha-trade',
-  });
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '',
+  database : 'alpha-trade'
+});
+ 
+// connection.connect(function(err) {
+//   if (err) {
+//     console.error('error connecting: ' + err.stack);
+//     return;
+//   }
+ 
+//   console.log('connected as id ' + connection.threadId);
+// });
 
-  var modelUsers = MyAppModel.extend({
-      tableName : "users"
-  })
-
-module.exports = {
-    users: modelUsers
-}
+module.exports = connection

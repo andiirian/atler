@@ -213,15 +213,15 @@
               <div class="box-body">
                 <div class="form-group col-md-12">
                     <label for="inputEmail4">Full Name</label>
-                    <input name="nama" value="<%=result.nama%>" type="text" class="form-control" id="inputEmail4" placeholder="Fullname">
+                    <input name="nama" value="<%=result[0].nama%>" type="text" class="form-control" id="inputEmail4" placeholder="Fullname">
                   </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">Email</label>
-                    <input disabled value="<%=result.email%>" type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                    <input disabled value="<%=result[0].email%>" type="email" class="form-control" id="inputEmail4" placeholder="Email">
                   </div>
                   <div class="form-group col-md-6">
                     <label for="inputPassword4">Contact</label>
-                    <input value="<%=result.contact%>" name="contact" type="text"  class="form-control" id="inputPassword4" placeholder="Contact">
+                    <input value="<%=result[0].contact%>" name="contact" type="text"  class="form-control" id="inputPassword4" placeholder="Contact">
                   </div>
                   <div class="form-group col-md-6">
                     <label for="inputEmail4">username</label>
@@ -233,7 +233,7 @@
                   </div>
                   <div class="form-group col-md-6">
                     <label for="inputPassword4">Norek</label>
-                    <input value="<%= result.norek%>" name="norek" type="text" class="form-control" id="inputPassword4" placeholder="Norek">
+                    <input value="<%= result[0].norek%>" name="norek" type="text" class="form-control" id="inputPassword4" placeholder="Norek">
                   </div>
                 
                
