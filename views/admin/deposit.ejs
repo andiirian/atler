@@ -146,10 +146,12 @@
                                                             <tr>
                                                               <th>Tx ID</th>
                                                               <th>User</th>
+                                                              <th>investasi(USD)</th>
                                                               <th>Bank Pengirim</th>
                                                               <th>No.Rek</th>
+
                                                               <th>Nama Pengirim</th>
-                                                              <th>Total pengirim</th>
+                                                              <th>Total pengirim(Rp)</th>
                                                               <th>Bukti Transaksi</th>
                                                             </tr>
                                                             </thead>
@@ -159,11 +161,12 @@
                                                                 
                                                               <td><%=items.tx_id%></td>
                                                               <td><%=items.user%></td>
+                                                              <td>$ <%=items.investasi%></td>
                                                               <td><%=items.bank_pengirim%></td>
                                                               <td><%=items.norek%></td>
                                                               <td><%=items.nama_pengirim%></td>
                                                               <td><%=items.total_pengirim%></td>
-                                                              <td><a href="<%=items.bukti_transaksi%>">Lihat </a>|<a href="deposit/<%=items.tx_id%>/1"> Terima </a>|<a href="deposit/deposit/<%=items.tx_id%>/2"> Tolak </a></td>
+                                                              <td><a href="<%=items.bukti_transaksi%>">Lihat </a>|<a href="deposit/<%=items.tx_id%>/1"> Terima </a>|<a href="deposit/<%=items.tx_id%>/2"> Tolak </a></td>
                                                             </tr>
                                                             <%})%>
                                                             </tbody>
@@ -171,10 +174,11 @@
                                                                     <tr>
                                                                             <th>Tx ID</th>
                                                                             <th>User</th>
+                                                                            <th>Investasi(USD)</th>
                                                                             <th>Bank Pengirim</th>
                                                                             <th>No.Rek</th>
                                                                             <th>Nama Pengirim</th>
-                                                                            <th>Total pengirim</th>
+                                                                            <th>Total pengirim(Rp)</th>
                                                                             <th>Bukti Transaksi</th>
                                                                           </tr>
                                                             </tfoot>
@@ -207,6 +211,7 @@
                                             <tr>
                                               <th>Tx ID</th>
                                               <th>User</th>
+                                             
                                               <th>Bank Pengirim</th>
                                               <th>No.Rek</th>
                                               <th>Nama Pengirim</th>
@@ -224,7 +229,12 @@
                                               <td><%=items.norek%></td>
                                               <td><%=items.nama_pengirim%></td>
                                               <td><%=items.total_pengirim%></td>
-                                              <td><a href="<%=items.bukti_transaksi%>">Lihat</a></td>
+                                              <%if(items.status == 1){%>
+                                                <td>sukses</td>
+                                                <%}else if(items.status == 2){%>
+                                                  <td>Failed</td>
+                                                  <%}%>
+                                             
                                             </tr>
                                             <%})%>
                                             </tbody>
@@ -232,6 +242,7 @@
                                                     <tr>
                                                             <th>Tx ID</th>
                                                             <th>User</th>
+                                                          
                                                             <th>Bank Pengirim</th>
                                                             <th>No.Rek</th>
                                                             <th>Nama Pengirim</th>

@@ -271,7 +271,7 @@ module.exports = {
 
           asy().then(()=>{
           })
-          res.render('users/paymentInformation',{data: data})
+          res.render('users/paymentInformation',{data: data, user: session_store.nama})
         },
 
     //payment
@@ -284,7 +284,7 @@ module.exports = {
         
         // res.end(tgl)
         session_store = req.session
-        db.query(`SELECT status, tx_id FROM tbl_investasi WHERE ? AND ?`,[{user: session_store.username}, {tx_id: req.params.id}],
+        db.query(`SELECT status,investasi, tx_id FROM tbl_investasi WHERE ? AND ?`,[{user: session_store.username}, {tx_id: req.params.id}],
         (err, row) =>{
             if (err) {
                 throw err
@@ -326,6 +326,7 @@ module.exports = {
            var data = {
                tx_id: req.body.tx_id,
                user : session_store.username,
+               investasi: req.body.investasi,
                bank_pengirim: req.body.bank_pengirim,
                norek    : req.body.norek,
                nama_pengirim: req.body.nama_pengirim,
@@ -335,7 +336,7 @@ module.exports = {
 
            db.query('INSERT INTO tbl_payment set ?', data,(err) =>{
               if (err) {
-                  return false
+                  throw err
               }
 
               db.query('UPDATE tbl_investasi set ? WHERE ? ', [{status: 1}, {tx_id: req.body.tx_id}], (err) =>{

@@ -72,6 +72,8 @@ module.exports = {
             data.push(result);
         db.query('SELECT * FROM tbl_payment WHERE status > 0', (err, result) =>{
             data.push(result)
+            // console.log(data[1])
+            // res.end()
             res.render('admin/deposit', {result: data, user: session_store.nama})
         })
         })
@@ -89,7 +91,7 @@ module.exports = {
                     res.redirect('/admin/deposit')
                 })
             })
-        }else if(req.params.status == 0){
+        }else if(req.params.status == 2){
             db.query(`UPDATE tbl_payment set status = ${req.params.status} WHERE ?`, {tx_id: req.params.tx_id}, (err) =>{
                 if (err) {
                     throw err
