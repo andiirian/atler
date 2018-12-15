@@ -53,7 +53,7 @@ module.exports = {
                     const t = {dompet: result[0][0].dompet - result[2][0].withdraw};
                     total.push(t)
                   
-                    res.render('users/dashboard', {result: data, total: total})
+                    res.render('users/dashboard', {result: data, total: total, user: session_store.nama})
                 })
     },
 
@@ -64,12 +64,13 @@ module.exports = {
     },
     postLogin: (req, res, next) =>{
         session_store = req.session
-        db.query('SELECT password, status FROM users WHERE ? ', {username: req.body.username}, (err, row)=> {
+        db.query('SELECT password, nama, status FROM users WHERE ? ', {username: req.body.username}, (err, row)=> {
             if (row.length == 0) {
                 res.send('tidakada')
             }else{
                 
                 if (passwordhash.verify(req.body.password, row[0].password)) {
+                  session_store.nama = row[0].nama
                   session_store.username = req.body.username
                   session_store.logged_in = true;
                   session_store.status = row[0].status
@@ -116,7 +117,7 @@ module.exports = {
         session_store = req.session;
         db.query('SELECT * FROM users WHERE ?', {username: session_store.username}, (err, result) =>{
            
-            res.render('users/profil',{result: result})
+            res.render('users/profil',{result: result, user: session_store.nama})
         })
         
     },
@@ -152,7 +153,7 @@ module.exports = {
                 throw err
             }
            
-            res.render('users/withdraw', {result: result})
+            res.render('users/withdraw', {result: result, user: session_store.nama})
         })
     },
     postWithdraw: (req, res, next) =>{
@@ -216,7 +217,12 @@ module.exports = {
 
     //deposit
     getDeposit: (req, res, next) =>{
-        res.render('users/deposit')
+        db.query(`SELECT *, DATE_ADD(date, INTERVAL 124 DAY) AS jatuh_tempo FROM tbl_investasi WHERE ?`, {user: session_store.username}, (err, result) =>{
+            if(err) reject(err)
+            res.render('users/deposit',{result: result, user: session_store.nama})
+        })
+
+        
     },
 
     postDeposit: (req, res, next) =>{
@@ -270,7 +276,7 @@ module.exports = {
 
     //payment
     getPaymentInformation: (req, res, next) =>{
-        res.render('users/paymentInformation')
+        res.render('users/paymentInformation',{ user: session_store.nama})
     },
     getPaymentConfirm: (req, res, next) =>{
         // const tanggal = new Date()
@@ -287,7 +293,7 @@ module.exports = {
                 if (row.length == 0 || row[0].status > 0) {
                     res.redirect('/users/dashboard')
                 }else{
-                    res.render('users/paymentConfirm', {result: row})
+                    res.render('users/paymentConfirm', {result: row, user: session_store.nama})
                 }
 
             }
@@ -352,7 +358,7 @@ module.exports = {
             if (err) {
                 throw err
             }
-            res.render('users/referrals', {ref: session_store.username, result: result})
+            res.render('users/referrals', {ref: session_store.username, result: result, user: session_store.nama})
         })
              
         
