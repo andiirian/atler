@@ -14,19 +14,31 @@ router.get('/register/:ref',usersController.getRegisterRef);
 router.post('/register', usersController.postRegister)
 
 //dashboard
-router.get('/dashboard',auth.check_login, (req, res, next) =>{res.render('users/dashboard')})
+router.get('/dashboard',auth.check_login,auth.check_user, usersController.getDashboard)
 
 //profil
-router.get('/profil',auth.check_login, usersController.getProfil)
-router.post('/profil',auth.check_login, usersController.postProfil)
+router.get('/profil',auth.check_login,auth.check_user, usersController.getProfil)
+router.post('/profil',auth.check_login,auth.check_user, usersController.postProfil)
 
 //referrals
-router.get('/referrals',auth.check_login, usersController.getRef)
+router.get('/referrals',auth.check_login,auth.check_user, usersController.getRef)
 
-router.get('/withdraw', auth.check_login, usersController.getWithdraw)
-router.get('/deposit', auth.check_login, usersController.getDeposit)
+//pembayaran
+router.get('/payment-information',auth.check_login,auth.check_user, usersController.getPaymentInformation)
+router.get('/payment-confirm/:id',auth.check_login,auth.check_user, usersController.getPaymentConfirm)
+router.post('/payment-confirm/:id',auth.check_login,auth.check_user, usersController.postPaymentConfirm)
+
+
+
+router.get('/withdraw', auth.check_login,auth.check_user, usersController.getWithdraw)
+router.post('/withdraw', auth.check_login,auth.check_user, usersController.postWithdraw)
+
+//deposit
+router.get('/deposit', auth.check_login,auth.check_user, usersController.getDeposit)
+router.post('/deposit', auth.check_login, usersController.postDeposit)
+
 //logout
-router.get('/logout.user', auth.check_login, usersController.getLogout)
+router.get('/logout.user', auth.check_login,auth.check_user, usersController.getLogout)
 
 
 module.exports = router;

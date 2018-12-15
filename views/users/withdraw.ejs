@@ -235,25 +235,25 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <form role="form" action="" method="POST">
               <div class="box-body">
                     <div class="form-group">
                             <label>Bank</label>
-                            <select class="form-control">
+                            <select name="bank" class="form-control">
                               <option>Pilih</option>
-                              <option>option 2</option>
-                              <option>option 3</option>
-                              <option>option 4</option>
-                              <option>option 5</option>
+                              <option value="BCA">BCA</option>
+                              <option value="BRI">BRI</option>
+                              <option value="BNI">BNI</option>
+                              
                             </select>
                           </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">No.Rek</label>
-                  <input type="text" class="form-control" id="exampleInputEmail1" placeholder="No.Rek">
+                  <input name="norek" type="text" class="form-control" id="exampleInputEmail1" placeholder="No.Rek">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Amount</label>
-                  <input type="number" class="form-control" id="exampleInputPassword1" placeholder="">
+                  <input name="amount" type="number" class="form-control" id="exampleInputPassword1" placeholder="">
                 </div>
                
                 
@@ -297,126 +297,21 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                  <%result.forEach(function(items){%>
                                 <tr>
-                                  <td>Trident</td>
-                                  <td>Internet
-                                    Explorer 4.0
+                                  <td><%=items.date%></td>
+                                  <td><%=items.withdraw%>
                                   </td>
-                                  <td>Win 95+</td>
-                                  <td> 4</td>
-                                  
+                                  <td><%=items.id_trx%></td>
+                                  <%if(items.status == 0){%>
+                                    <td>Waiting Confirm For Admin</td>
+                                    <%}else if(items.status == 1){%>
+                                      <td>Sukses</td>
+                                      <%}else if(items.status == 2){%>
+                                        <td>Failed</td>
+                                        <%}%>
                                 </tr>
-                                <tr>
-                                  <td>Trident</td>
-                                  <td>Internet
-                                    Explorer 5.0
-                                  </td>
-                                  
-                                  <td>5</td>
-                                  <td>C</td>
-                                </tr>
-                                <tr>
-                                  
-                                  <td>Internet
-                                    Explorer 5.5
-                                  </td>
-                                  <td>Win 95+</td>
-                                  <td>5.5</td>
-                                  <td>A</td>
-                                </tr>
-                                <tr>
-                                  
-                                  <td>Internet
-                                    Explorer 6
-                                  </td>
-                                  <td>Win 98+</td>
-                                  <td>6</td>
-                                  <td>A</td>
-                                </tr>
-                                <tr>
-                                  <td>Trident</td>
-                                  <td>Internet Explorer 7</td>
-                                  <td>Win XP SP2+</td>
-                                  
-                                  <td>A</td>
-                                </tr>
-                                <tr>
-                                  <td>Trident</td>
-                                  <td>AOL browser (AOL desktop)</td>
-                                  <td>Win XP</td>
-                                  
-                                  <td>A</td>
-                                </tr>
-                                <tr>
-                                  <td>Gecko</td>
-                                  
-                                  <td>Win 98+ / OSX.2+</td>
-                                  <td>1.7</td>
-                                  <td>A</td>
-                                </tr>
-                                <tr>
-                                  <td>Gecko</td>
-                                  
-                                  <td>Win 98+ / OSX.2+</td>
-                                  <td>1.8</td>
-                                  <td>A</td>
-                                </tr>
-                                <tr>
-                                  <td>Gecko</td>
-                                  <td>Firefox 2.0</td>
-                                  
-                                  <td>1.8</td>
-                                  <td>A</td>
-                                </tr>
-                                <tr>
-                                  <td>Gecko</td>
-                                  <td>Firefox 3.0</td>
-                                  
-                                  <td>1.9</td>
-                                  <td>A</td>
-                                </tr>
-                                <tr>
-                                  <td>Gecko</td>
-                                  
-                                  <td>OSX.2+</td>
-                                  <td>1.8</td>
-                                  <td>A</td>
-                                </tr>
-                                <tr>
-                                  <td>Gecko</td>
-                                  <td>Camino 1.5</td>
-                                  <td>OSX.3+</td>
-                                  
-                                  <td>A</td>
-                                </tr>
-                                <tr>
-                                  <td>Gecko</td>
-                                  <td>Netscape 7.2</td>
-                                  <td>Win 95+ / Mac OS 8.6-9.2</td>
-                                  
-                                  <td>A</td>
-                                </tr>
-                                <tr>
-                                  <td>Gecko</td>
-                                  <td>Netscape Browser 8</td>
-                                  <td>Win 98SE+</td>
-                                  
-                                  <td>A</td>
-                                </tr>
-                                <tr>
-                                  <td>Gecko</td>
-                                  <td>Netscape Navigator 9</td>
-                                  <td>Win 98+ / OSX.2+</td>
-                                  
-                                  <td>A</td>
-                                </tr>
-                              
-                               
-                                
-                                
-                               
-                                
-                                
+                                <%})%>
                                 </tbody>
                                 <tfoot>
                                         <tr>
