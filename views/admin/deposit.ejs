@@ -88,8 +88,8 @@
           </li>
           <li class="header">TRANSACTION</li>
           <li>
-            <a href="deposit">
-              <i class="fa fa-cubes"></i> <span>Deposits</span>
+            <a href="investment">
+              <i class="fa fa-cubes"></i> <span>Invesment</span>
               
             </a>
           </li>
@@ -103,15 +103,29 @@
             </a>
             
           </li>
-          <li>
-                  <a href="logout.admin">
-                    <i class="fa fa-sign-out"></i> <span>Logout</span>
-                  
-                  </a>
-                  
-                </li>
-       
          
+                <li class="header">LIST</li>
+                <li>
+                    <a href="investmentList">
+                      <i class="fa fa-table"></i> <span>Investment List</span>
+                    
+                    </a>
+                    
+                  </li>
+                  <li>
+                      <a href="withdrawList">
+                        <i class="fa fa-table"></i> <span>Withdraw List</span>
+                      
+                      </a>
+                      
+                    </li>
+                    <li>
+                        <a href="logout.admin">
+                          <i class="fa fa-sign-out"></i> <span>Logout</span>
+                        
+                        </a>
+                        
+                      </li>
           
         </ul>
     </section>
@@ -165,8 +179,15 @@
                                                               <td><%=items.bank_pengirim%></td>
                                                               <td><%=items.norek%></td>
                                                               <td><%=items.nama_pengirim%></td>
-                                                              <td><%=items.total_pengirim%></td>
-                                                              <td><a href="<%=items.bukti_transaksi%>">Lihat </a>|<a href="deposit/<%=items.tx_id%>/1"> Terima </a>|<a href="deposit/<%=items.tx_id%>/2"> Tolak </a></td>
+                                                              <% var bilangan = items.total_pengirim;
+                                                              var	reverse = bilangan.toString().split('').reverse().join(''),
+                                                              ribuan 	= reverse.match(/\d{1,3}/g);
+                                                              ribuan	= ribuan.join('.').split('').reverse().join('');
+                                                            
+                                                          
+                                                           %>
+                                                              <td><%=ribuan%></td>
+                                                              <td><a href="<%=items.bukti_transaksi%>">Lihat </a>|<a href="investment/<%=items.tx_id%>/1"> Terima </a>|<a href="investment/<%=items.tx_id%>/2"> Tolak </a></td>
                                                             </tr>
                                                             <%})%>
                                                             </tbody>
@@ -228,7 +249,14 @@
                                               <td><%=items.bank_pengirim%></td>
                                               <td><%=items.norek%></td>
                                               <td><%=items.nama_pengirim%></td>
-                                              <td><%=items.total_pengirim%></td>
+                                              <% var bilangan = items.total_pengirim;
+                                                              var	reverse = bilangan.toString().split('').reverse().join(''),
+                                                              ribuan 	= reverse.match(/\d{1,3}/g);
+                                                              ribuan	= ribuan.join('.').split('').reverse().join('');
+                                                            
+                                                          
+                                                           %>
+                                                              <td>Rp.<%=ribuan%></td>
                                               <%if(items.status == 1){%>
                                                 <td>sukses</td>
                                                 <%}else if(items.status == 2){%>

@@ -1,5 +1,6 @@
 var db = require('../models/models')
 var passwordhash = require('password-hash')
+
 module.exports = {
 
     getDashboard: (req, res, next) =>{
@@ -13,8 +14,12 @@ module.exports = {
                    data.push(result)
                    db.query('SELECT * FROM users WHERE status = 0',(err, result) => {
                     data.push(result)
-                   
-                    res.render('admin/dashboard', {result: data, user: session_store.nama})
+                   db.query('SELECT tx_id, investasi, date, status, DATE_ADD(date, INTERVAL 124 DAY) AS jatuh_tempo  FROM tbl_investasi WHERE status = 2 OR STATUS = 4',
+                    (err, result) =>{
+                        data.push(result)
+                        res.render('admin/dashboard', {result: data, user: session_store.nama})
+                   })
+                    
                 })
                })
            })
@@ -84,11 +89,11 @@ module.exports = {
                 if (err) {
                     throw err
                 }
-                db.query(`UPDATE tbl_investasi set status = 2, date = CURRENT_TIMESTAMP() WHERE ?`, {tx_id: req.params.tx_id}, (err) =>{
+                db.query(`UPDATE tbl_investasi set status = 2 WHERE ?`, {tx_id: req.params.tx_id}, (err) =>{
                     if (err) {
                         throw err
                     }
-                    res.redirect('/admin/deposit')
+                    res.redirect('/admin/investment')
                 })
             })
         }else if(req.params.status == 2){
@@ -100,11 +105,11 @@ module.exports = {
                     if (err) {
                         throw err
                     }
-                    res.redirect('/admin/deposit')
+                    res.redirect('/admin/investment')
                 })
             })
         }else{
-            res.redirect('/admin/deposit')
+            res.redirect('/admin/investment')
         }
     },
 
@@ -169,6 +174,21 @@ module.exports = {
         
        
 
+    },
+    //investment list
+    getinvestmentList: (req, res, next) =>{
+        session_store = req.session
+        db.query('SELECT tx_id, investasi, date, status, DATE_ADD(date, INTERVAL 124 DAY) AS jatuh_tempo  FROM tbl_investasi WHERE status = 2 OR STATUS = 4',
+                    (err, result) =>{
+                       
+                        res.render('admin/investmentList', {data: result, user: session_store.nama})
+                   })
+    },
+    getwithdrawList: (req, res, next) =>{
+        session_store = req.session
+        db.query('SELECT * FROM tbl_withdraw WHERE status = 1 OR status = 2', (err, result) =>{
+            res.render('admin/withdrawList', {data: result, user: session_store.nama})
+        })
     },
 
     getLogout: (req,res, next) =>{

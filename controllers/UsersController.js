@@ -97,7 +97,8 @@ module.exports = {
             nama    : req.body.nama,
             email   : req.body.email,
             password: passwordhash.generate(req.body.password),
-            ref: req.body.ref[0]
+            ref: req.body.ref[0],
+            status: 0
         }
        
         db.query('insert into users set ?', data, (err, field) =>{
@@ -331,7 +332,8 @@ module.exports = {
                norek    : req.body.norek,
                nama_pengirim: req.body.nama_pengirim,
                total_pengirim: req.body.total_pengirim,
-               bukti_transaksi: '/images/bukti/'+ req.file.filename
+               bukti_transaksi: '/images/bukti/'+ req.file.filename,
+               status: 0
            }
 
            db.query('INSERT INTO tbl_payment set ?', data,(err) =>{

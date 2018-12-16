@@ -144,7 +144,7 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>$ <%=total[3].dompet%>,00</h3>
+              <h3>$ <%=total[3].dompet.toLocaleString()%>,00</h3>
 
               <p>Account Balance</p>
             </div>
@@ -159,7 +159,7 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>$ <%=total[1][0].investasi%>,00</h3>
+              <h3>$ <%=total[1][0].investasi.toLocaleString()%>,00</h3>
 
               <p>Total Invesment</p>
             </div>
@@ -174,7 +174,7 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>$ <%=total[0][0].pendapatan%></h3>
+              <h3>$ <%=total[0][0].pendapatan.toLocaleString()%>,00</h3>
 
               <p>Total Earnings</p>
             </div>
@@ -189,7 +189,7 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>$ <%=total[2][0].withdraw%></h3>
+              <h3>$ <%=total[2][0].withdraw.toLocaleString()%>,00</h3>
 
               <p>Total Withdraw</p>
             </div>
@@ -236,7 +236,7 @@
                                 <td><%=items.date%>
                                 </td>
                                 <td><%=items.jatuh_tempo%></td>
-                                <td><%=items.investasi%></td>
+                                <td><%=items.investasi.toLocaleString()%></td>
                                 <%if(items.status == 0){%>
                                   <td><a href="payment-confirm/<%=items.tx_id%>">Confirm</a></td>
                                   <%}else if(items.status == 1){%>

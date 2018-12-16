@@ -166,8 +166,13 @@
                       
                     </tr>
                     <tr>
+                      <%
+                      var bilangan = data.amount
+                      var	reverse = bilangan.toString().split('').reverse().join(''),
+                      ribuan 	= reverse.match(/\d{1,3}/g);
+                      ribuan	= ribuan.join('.').split('').reverse().join('');%>
                       <th>Pembayaran</th>
-                      <td>Rp <%=data.amount%></td>
+                      <td>Rp.<%=ribuan%></td>
                     </tr>
                     <tr>
                       <th>Bank</th>
