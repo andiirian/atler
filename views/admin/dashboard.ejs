@@ -156,7 +156,11 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
+              <%if(result.[0][0].investasi != null){%>
               <h3>$ <%=result[0][0].investasi.toLocaleString()%>,00</h3>
+              <%}else{%>
+                <h3>$ ,00</h3>
+                <%}%>
 
               <p>Total Investasi</p>
             </div>
@@ -171,7 +175,12 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>$ <%=result[1][0].withdraw.toLocaleString()%></h3>
+                <%if(result[1][0].withdraw != null){%>
+                  <h3>$ <%=result[1][0].withdraw.toLocaleString()%></h3>
+                  <%}else{%>
+                    <h3>$ ,00</h3>
+                    <%}%>
+              
 
               <p>Total withdraw</p>
             </div>

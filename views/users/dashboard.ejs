@@ -144,7 +144,12 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>$ <%=total[3].dompet.toLocaleString()%>,00</h3>
+                <%if(total[3].dompet != null){%>
+                  <h3>$ <%=total[3].dompet.toLocaleString()%>,00</h3>
+                  <%}else{%>
+                    <h3>$ ,00</h3>
+                    <%}%>
+              
 
               <p>Account Balance</p>
             </div>
@@ -159,7 +164,13 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>$ <%=total[1][0].investasi.toLocaleString()%>,00</h3>
+                <%if(total[1][0].investasi != null){%>
+                  <h3>$ <%=total[1][0].investasi.toLocaleString()%>,00</h3>
+                  <%}else{%>
+                    <h3>$ ,00</h3>
+                    <%}%>
+              
+              
 
               <p>Total Invesment</p>
             </div>
@@ -174,7 +185,12 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>$ <%=total[0][0].pendapatan.toLocaleString()%>,00</h3>
+                <%if(total[0][0].pendapatan != null){%>
+                  <h3>$ <%=total[0][0].pendapatan.toLocaleString()%>,00</h3>
+                  <%}else{%>
+                    <h3>$ ,00</h3>
+                    <%}%>
+           
 
               <p>Total Earnings</p>
             </div>
@@ -189,7 +205,12 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>$ <%=total[2][0].withdraw.toLocaleString()%>,00</h3>
+                <%if(total[2][0].withdraw != null){%>
+                  <h3>$ <%=total[2][0].withdraw.toLocaleString()%>,00</h3>
+                  <%}else{%>
+                    <h3>$ ,00</h3>
+                    <%}%>
+              
 
               <p>Total Withdraw</p>
             </div>
