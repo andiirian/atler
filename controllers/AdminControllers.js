@@ -28,13 +28,13 @@ module.exports = {
 
     //Login
     getLogin: (req, res, next) =>{
-        res.render('admin/login')
+        res.render('admin/login',{message: null})
     },
     postLogin: (req, res, next) =>{
         session_store = req.session
         db.query('SELECT password, nama, status FROM users WHERE ? AND ? ', [{username: req.body.username}, {status: 1}], (err, row)=> {
             if (row.length == 0) {
-                res.send('tidakada')
+                res.render('admin/login',{message: "username is not ready exist."})
             }else{
                 
                 if (passwordhash.verify(req.body.password, row[0].password)) {
@@ -44,7 +44,7 @@ module.exports = {
                   session_store.status = row[0].status
                   res.redirect('/admin/dashboard')
                 }else{
-                    res.send('salah')
+                    res.render('admin/login', {message: "password is wrong"})
                 }
             }
         })
@@ -89,7 +89,7 @@ module.exports = {
                 if (err) {
                     throw err
                 }
-                db.query(`UPDATE tbl_investasi set status = 2 WHERE ?`, {tx_id: req.params.tx_id}, (err) =>{
+                db.query(`UPDATE tbl_investasi set status = 2, date = CURRENT_TIMESTAMP() WHERE ?`, {tx_id: req.params.tx_id}, (err) =>{
                     if (err) {
                         throw err
                     }

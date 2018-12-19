@@ -60,13 +60,13 @@ module.exports = {
 
     //login
     getLogin: (req, res, next) =>{
-        res.render('users/login');
+        res.render('users/login',{message: null});
     },
     postLogin: (req, res, next) =>{
         session_store = req.session
         db.query('SELECT password, nama, status FROM users WHERE ? ', {username: req.body.username}, (err, row)=> {
             if (row.length == 0) {
-                res.send('tidakada')
+                res.render('users/login',{message: "username is not ready exist."})
             }else{
                 
                 if (passwordhash.verify(req.body.password, row[0].password)) {
@@ -76,7 +76,7 @@ module.exports = {
                   session_store.status = row[0].status
                   res.redirect('/users/dashboard')
                 }else{
-                    res.send('salah')
+                    res.render('users/login', {message: "password is wrong."})
                 }
             }
         })
@@ -85,19 +85,47 @@ module.exports = {
 
     //register
     getRegister: (req, res, next) =>{
-        res.render('users/register',{ref: null})
+        res.render('users/register',{ref: null, message: null})
     },
     getRegisterRef: (req, res, next) =>{
-        res.render('users/register', {ref: req.params.ref})
+        res.render('users/register', {ref: req.params.ref,message: null})
     },
     postRegister: (req, res, next) =>{
         session_store = req.session
-        var data = {
+        var message = [];
+       const promiseA  = new Promise((resolve, reject) => {
+           db.query("SELECT username FROM users WHERE ?", {username: req.body.username}, (err, result)=>{
+               if (result.length != 0 ) {
+                    resolve("username is a ready exist")          
+                           // message = "username is a ready exist"      
+                }
+                    resolve(null)                
+           })
+       })
+       const promiseB = new Promise((resolve, reject) =>{
+        db.query("SELECT email FROM users WHERE ? ",{email: req.body.email},(err, result) =>{
+                    if (result.length != 0) {
+                        resolve("email is a ready exist")    
+                    }
+                    resolve(null)  
+                })
+
+       })
+
+       promiseA
+        .then((text)=>{
+            message.push(text);
+            return promiseB
+        })
+        .then((text)=> {
+            message.push(text)
+            if (message[0] == null && message[1] == null) {
+           var data = {
             username: req.body.username,
             nama    : req.body.nama,
             email   : req.body.email,
             password: passwordhash.generate(req.body.password),
-            ref: req.body.ref[0],
+            ref: req.body.ref,
             status: 0
         }
        
@@ -107,10 +135,66 @@ module.exports = {
             }else{
               session_store.username = req.body.username
               session_store.logged_in = true;
+              session_store.nama = req.body.nama
               session_store.status = 0;
               res.redirect('/users/dashboard')
             }
         })
+            }else{ 
+                res.render('users/register',{ref: req.body.ref, message: message})
+            }
+        })
+
+        // db.query("SELECT username FROM users WHERE ?", {username: req.body.username}, (err, result)=>{
+        //     if (result.length != 0 ) {
+        //         res.send('ada')
+        //         // message = "username is a ready exist"      
+        //     }
+        //     else{
+        //         res.send("tidak ada")
+        //     }
+        // })
+        // var validate = async () =>{
+        //     var message = [];
+        //     await db.query("SELECT username FROM users WHERE ?", {username: req.body.username}, (err, result)=>{
+        //         if (result.length != 0 ) {
+        //             message.push("username is a ready exist")
+        //             // message = "username is a ready exist"              
+        //         }
+        //     })
+        //     await db.query("SELECT email FROM users WHERE ? ",{email: req.body.email},(err, result) =>{
+        //         if (result.length != 0) {
+        //             message.push("email is a ready exist")        
+        //         }
+        //     })
+        //     return message
+
+        // }
+
+        // validate()
+        //     .then((text) =>{
+        //         res.send(text)
+        //     })
+        // var data = {
+        //     username: req.body.username,
+        //     nama    : req.body.nama,
+        //     email   : req.body.email,
+        //     password: passwordhash.generate(req.body.password),
+        //     ref: req.body.ref,
+        //     status: 0
+        // }
+       
+        // db.query('insert into users set ?', data, (err, field) =>{
+        //     if (err) {
+        //         throw err
+        //     }else{
+        //       session_store.username = req.body.username
+        //       session_store.logged_in = true;
+        //       session_store.nama = req.body.nama
+        //       session_store.status = 0;
+        //       res.redirect('/users/dashboard')
+        //     }
+        // })
     },
 
     //profil

@@ -16,6 +16,14 @@
   <link rel="stylesheet" href="/index/dist/css/AdminLTE.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="/index/plugins/iCheck/square/blue.css">
+  <style>
+   .error{
+     	color: red;
+     }
+  </style>
+  <script type="text/javascript" src="/index/plugins/Validate/jquery.min.js"></script>
+  <script type="text/javascript" src="/index/plugins/Validate/jquery.validate.min.js"></script>
+  
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,35 +43,42 @@
 
   <div class="register-box-body">
     <p class="login-box-msg">Register a new membership</p>
-
-    <form action="/users/register" method="post">
+    <% if(message != null){ message.forEach(function(items){ %>
+      <p class="error"><%=items%></p>
+  <%  })} %>
+   
+    <form action="/users/register" method="post" id="register">
         <div class="form-group has-feedback">
-            <input type="text" name="username" class="form-control" placeholder="username">
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            <input type="text" name="username" id="username" class="form-control required"  placeholder="username">
           </div>
       <div class="form-group has-feedback">
-        <input name="nama" type="text" class="form-control" placeholder="Full name">
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+          <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        <input name="nama" type="text" class="form-control required" id="nama" placeholder="Full name">
+        
       </div>
       <div class="form-group has-feedback">
-        <input name="email" type="email" class="form-control" placeholder="Email">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <input name="email" type="email" class="form-control required" id="email" placeholder="Email">
+        
       </div>
       <div class="form-group has-feedback">
-        <input name="password" type="password" class="form-control" placeholder="Password">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        <input name="password" type="password" class="form-control required" id="password" placeholder="Password">
+        
       </div>
      
       <div class="form-group has-feedback">
-          <input value="<%=ref%>" name="ref" type="text" class="form-control" placeholder="Full name">
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
+          <input value="<%=ref%>" name="ref" type="text" class="form-control " placeholder="Sponsored">
+          
         </div>
      
       <div class="row">
         
         <!-- /.col -->
         <div class="form-group col-xs-12">
-          <button name="ref" type="submit" class="btn btn-primary btn-lg btn-block ">Register</button>
+          <button  type="submit" class="btn btn-primary btn-lg btn-block ">Register</button>
         </div>
         <!-- /.col -->
       </div>
@@ -75,12 +90,13 @@
   </div>
   <!-- /.form-box -->
 </div>
+
 <!-- /.register-box -->
 
 <!-- jQuery 3 -->
-<script src="/index/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- <script src="/index/bower_components/jquery/dist/jquery.min.js"></script> -->
 <!-- Bootstrap 3.3.7 -->
-<script src="/index/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- <script src="/index/bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
 <!-- iCheck -->
 <script src="/index/plugins/iCheck/icheck.min.js"></script>
 <script>
@@ -90,7 +106,19 @@
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' /* optional */
     });
+    $("#register").validate({
+        rules: {
+          messages: {
+            username: {
+              required: "tidak boleh kosong"
+            }
+          }
+        }
+      });
   });
 </script>
+<script>
+ 
+  </script>
 </body>
 </html>
