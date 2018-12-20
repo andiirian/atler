@@ -29,7 +29,7 @@ module.exports = {
                                 {user: session_store.username}
                                ,(err, row) =>{
                                    total.push(row)
-                                    db.query(`SELECT SUM(withdraw) AS withdraw FROM tbl_withdraw WHERE status = 1 AND ?`, 
+                                    db.query(`SELECT SUM(withdraw) AS withdraw FROM tbl_withdraw WHERE status < 2 AND ?`, 
                                          {user: session_store.username}
                                        ,(err, row) =>{
                                        if (row.length == 0) {
@@ -307,14 +307,14 @@ module.exports = {
                 status  : 0  
           }
 
-          db.query(`SELECT SUM(dompet) AS dompet FROM tbl_investasi WHERE status > 1  AND ?`,
+          db.query(`SELECT SUM(pendapatan) AS dompet FROM tbl_investasi WHERE status > 1  AND ?`,
              {user : session_store.username},(err, row)=>{
                  if (err) {
                      throw err
                  }
                  
                 data1.push(row)
-                db.query(`SELECT SUM(withdraw) AS withdraw FROM tbl_withdraw WHERE status = 1 AND ?`, 
+                db.query(`SELECT SUM(withdraw) AS withdraw FROM tbl_withdraw WHERE status < 2 AND ?`, 
                 {user: session_store.username}
               ,(err, row)=>{
                   if (err) {
