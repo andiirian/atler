@@ -20,7 +20,7 @@ module.exports = {
                 })
             })
             const promiseB = new Promise((resolve, reject) =>{
-                db.query(`SELECT SUM(dompet) AS dompet, SUM(pendapatan) AS pendapatan FROM tbl_investasi WHERE status > 1  AND ?`,
+                db.query(`SELECT SUM(pendapatan) AS pendapatan FROM tbl_investasi WHERE status > 1  AND ?`,
                             {user : session_store.username}
                             
                             ,(err, row) =>{
@@ -50,7 +50,7 @@ module.exports = {
                     return promiseB
                 })
                 .then(result =>{
-                    const t = {dompet: result[0][0].dompet - result[2][0].withdraw};
+                    const t = {dompet: result[0][0].pendapatan - result[2][0].withdraw};
                     total.push(t)
                   
                     res.render('users/dashboard', {result: data, total: total, user: session_store.nama})
@@ -208,6 +208,24 @@ module.exports = {
     },
     postProfil: (req, res, next) =>{
         session_store = req.session
+        if (req.body.password == "") {
+            db.query('UPDATE users set ? where ?',[
+                {
+                    nama: req.body.nama,
+                    contact: req.body.contact,
+                    norek: req.body.norek
+                    
+                },
+                {
+                    username: session_store.username
+                }
+            ], (err) =>{
+                if (err) {
+                    throw err
+                }
+                res.redirect('/users/profil')
+            })
+        }else{
         db.query('UPDATE users set ? where ?',[
             {
                 nama: req.body.nama,
@@ -222,9 +240,9 @@ module.exports = {
             if (err) {
                 throw err
             }
-            res.redirect('/users/dashboard')
+            res.redirect('/users/profil')
         })
-        
+    }
 
         
        
@@ -233,13 +251,39 @@ module.exports = {
 
     //withdraw
     getWithdraw: (req, res, next) =>{
-        db.query(`SELECT * FROM tbl_withdraw WHERE ?`, {user: session_store.username}, (err, result) =>{
-            if (err) {
-                throw err
-            }
-           
-            res.render('users/withdraw', {result: result, user: session_store.nama})
+        session_store = req.session
+        var data = [];
+        const promiseWithdraw = new Promise((resolve, reject) =>{
+            db.query(`SELECT * FROM tbl_withdraw WHERE ?`, {user: session_store.username}, (err, result) =>{
+                if (err) {
+                    throw err
+                }
+                resolve(result)           
+            })
         })
+        const promiseBank = new Promise((resolve, reject) =>{
+            db.query("SELECT norek FROM users WHERE ? ",{username: session_store.username},(err, result) =>{
+                if (err) {
+                    throw err
+                }
+
+                resolve(result)
+            })
+        })
+
+        promiseWithdraw
+            .then(result => {
+                data.push(result)
+                return promiseBank
+            })
+            .then(result=>{
+                data.push(result)
+                res.render('users/withdraw', {result: data, user: session_store.nama})
+                
+            })
+
+            
+      
     },
     postWithdraw: (req, res, next) =>{
         function makeid() {
@@ -278,7 +322,7 @@ module.exports = {
                   }
                var data0 = data1[0][0].dompet - row[0].withdraw
 
-                if (data0 > data.withdraw) {
+                if (data0 > data.withdraw && data.withdraw > 15) {
                      db.query(`INSERT INTO tbl_withdraw set ?`, data, (err) =>{
                          if (err) {
                           throw err
@@ -323,12 +367,18 @@ module.exports = {
           }
           function dana(i) {
               var a;
-              if (i == 500000) {
+              if (i == 3200000) {
+                  a = 200
+              }else if (i == 8000000){
                   a = 500
-              }else if (i == 1000000){
+              }else if(i == 16000000){
                   a = 1000
-              }else if(i == 1500000){
-                  a = 1500
+              }else if(i == 32000000){
+                a = 2000
+              }else if(i == 80000000){
+                a = 5000
+              }else if(i == 160000000){
+                  a = 10000
               }
 
               return a;
@@ -450,6 +500,51 @@ module.exports = {
              
         
     },
+
+    //list
+    getWithdrawList: (req, res, next) =>{
+        session_store = req.session
+        db.query("SELECT id_trx, withdraw, status, date FROM tbl_withdraw WHERE ?", {user: session_store.username},(err, result) =>{
+            if (err) {
+                throw err
+            }
+            res.render('users/withdrawList', {result: result, user: session_store.nama})
+        })
+    },
+    getInvestmentList: (req, res, next) =>{
+        session_store = req.session
+        db.query("SELECT tx_id, investasi, date, DATE_ADD(date, INTERVAL 124 DAY) AS jatuh_tempo, status FROM tbl_investasi WHERE status >= 2 AND ?",
+        
+            {
+                user: session_store.username
+            }
+        , (err, result) =>{
+            if (err) {
+                throw err
+            }
+
+            res.render('users/investmentList', {result: result, user: session_store.username})
+        })
+    },
+    getEarningList: (req, res, next) =>{
+        session_store = req.session
+        db.query("SELECT tx_id, pendapatan, date, DATE_ADD(date, INTERVAL 124 DAY) AS jatuh_tempo, status FROM tbl_investasi WHERE status >= 2 AND ?",
+        
+            {
+                user: session_store.username
+            }
+        , (err, result) =>{
+            if (err) {
+                throw err
+            }
+
+            res.render('users/earningList', {result: result, user: session_store.username})
+        })
+    }, 
+
+
+
+
     //logout
 
     getLogout: (req,res, next) =>{

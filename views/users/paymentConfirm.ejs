@@ -17,7 +17,13 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="/index/dist/css/skins/_all-skins.min.css">
-
+  <style>
+      .error{
+          color: red;
+        }
+     </style>
+     <script type="text/javascript" src="/index/plugins/Validate/jquery.min.js"></script>
+     <script type="text/javascript" src="/index/plugins/Validate/jquery.validate.min.js"></script>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -104,6 +110,28 @@
           </a>
           
         </li>
+        <li class="header">LIST</li>
+        <li>
+            <a href="investmentList">
+              <i class="fa fa-table"></i> <span>Investment List</span>
+            
+            </a>
+            
+          </li>
+          <li>
+              <a href="withdrawList">
+                <i class="fa fa-table"></i> <span>Withdraw List</span>
+              
+              </a>
+              
+            </li>
+            <li>
+                <a href="earningList">
+                  <i class="fa fa-table"></i> <span>Earning List</span>
+                
+                </a>
+                
+              </li>
         <li>
                 <a href="logout.user">
                   <i class="fa fa-sign-out"></i> <span>Logout</span>
@@ -124,7 +152,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Profil
+        Payment-Confirm
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
@@ -142,37 +170,46 @@
              <!-- general form elements -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Profil</h3>
+              <h3 class="box-title">Payment-Confirm</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="" id="confirm" method="POST" enctype="multipart/form-data">
               <div class="box-body">
                 <div class="form-group col-md-12">
                     <label for="inputEmail4">Tx ID</label>
-                    <input value="<%=result[0].tx_id%>" disabled type="text" class="form-control" id="inputEmail4" placeholder="Fullname">
-                    <input value="<%=result[0].tx_id%>" type="hidden" name="tx_id" class="form-control" id="inputEmail4" placeholder="Fullname">
+                    <input value="<%=result[0].tx_id%>" disabled type="text" class="form-control" placeholder="Fullname">
+                    <input value="<%=result[0].tx_id%>" type="hidden" name="tx_id" class="form-control" placeholder="Fullname">
                     <input value="<%=result[0].investasi%>" type="hidden" name="investasi" class="form-control" id="inputEmail4" placeholder="Fullname">
                   </div>
                 <div class="form-group col-md-12">
-                    <label for="inputEmail4">Bank Pengirim</label>
-                    <input name="bank_pengirim" type="text" class="form-control" id="inputEmail4" placeholder="Bank Pengirim">
+                    <label for="">Bank Pengirim</label>
+                    <input name="bank_pengirim" type="text" class="form-control required"  placeholder="Bank Pengirim">
                   </div>
                   <div class="form-group col-md-12">
-                    <label for="inputEmail4">No.Rek</label>
-                    <input name="norek" type="text" class="form-control" id="inputEmail4" placeholder="No Rek">
+                    <label>No.Rek</label>
+                    <input name="norek" type="text" class="form-control required"  placeholder="No Rek">
                   </div>
                   <div class="form-group col-md-12">
-                    <label for="inputPassword4">Nama Pengirim</label>
-                    <input value="" name="nama_pengirim" type="text"  class="form-control" id="inputPassword4" placeholder="Nama Pengirim">
+                    <label >Nama Pengirim</label>
+                    <input value="" name="nama_pengirim" type="text"  class="form-control required" id="inputPassword4" placeholder="Nama Pengirim">
                   </div>
+                  <div class="form-group col-md-12 required">
+                      <label>Total Pembayaran</label>
+                      <select id="amount" name="total_pengirim" class="form-control required">
+                        <option value="">Pilih</option>
+                        <option value="3200000">$200</option>
+                        <option value="8000000">$500</option>
+                        <option value="16000000">$1000</option>
+                        <option value="32000000">$2000</option>
+                        <option value="80000000">$5000</option>
+                        <option value="160000000">$10000</option>
+                      </select>
+                      
+                    </div>
                   <div class="form-group col-md-12">
-                    <label for="inputEmail4">Total Pengiriman</label>
-                    <input type="number" name="total_pengirim" class="form-control"value="" id="inputEmail4" placeholder="Total Pengiriman">
-                  </div>
-                  <div class="form-group col-md-12">
-                    <label for="exampleFormControlFile1">Bukti Transaksi</label>
-                    <input name="foto-bukti" type="file" class="form-control-file" id="exampleFormControlFile1">
+                    <label>Bukti Transaksi</label>
+                    <input name="foto-bukti" type="file" class="form-control-file required" >
                     <small id="emailHelp" class="form-text text-muted">Kami menerima file berupa .jpg .jpeg</small>
                   </div>
                   
@@ -220,9 +257,12 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
-<script src="/index/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="/index/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script>
+    $(function () {
+      
+      $("#confirm").validate();
+    })
+  </script>
 <!-- DataTables -->
 
 <!-- SlimScroll -->

@@ -107,6 +107,30 @@
             </a>
             
           </li>
+          <li class="header">LIST</li>
+          <li>
+              <a href="investmentList">
+                <i class="fa fa-table"></i> <span>Investment List</span>
+              
+              </a>
+              
+            </li>
+            <li>
+                <a href="withdrawList">
+                  <i class="fa fa-table"></i> <span>Withdraw List</span>
+                
+                </a>
+                
+              </li>
+              <li>
+                  <a href="earningList">
+                    <i class="fa fa-table"></i> <span>Earning List</span>
+                  
+                  </a>
+                  
+                </li>
+              
+    
           <li>
                   <a href="logout.user">
                     <i class="fa fa-sign-out"></i> <span>Logout</span>
@@ -167,7 +191,7 @@
                 <%if(total[1][0].investasi != null){%>
                   <h3>$ <%=total[1][0].investasi.toLocaleString()%>,00</h3>
                   <%}else{%>
-                    <h3>$ ,00</h3>
+                    <h3>$ 0,00</h3>
                     <%}%>
               
               
@@ -188,7 +212,7 @@
                 <%if(total[0][0].pendapatan != null){%>
                   <h3>$ <%=total[0][0].pendapatan.toLocaleString()%>,00</h3>
                   <%}else{%>
-                    <h3>$ ,00</h3>
+                    <h3>$ 0,00</h3>
                     <%}%>
            
 
@@ -208,7 +232,7 @@
                 <%if(total[2][0].withdraw != null){%>
                   <h3>$ <%=total[2][0].withdraw.toLocaleString()%>,00</h3>
                   <%}else{%>
-                    <h3>$ ,00</h3>
+                    <h3>$ 0,00</h3>
                     <%}%>
               
 
@@ -253,20 +277,32 @@
 
                                 
                               <tr>
-                                <td><%=items.id%></td>
-                                <td><%=items.date%>
-                                </td>
-                                <td><%=items.jatuh_tempo%></td>
-                                <td><%=items.investasi.toLocaleString()%></td>
+                                <td><%=items.tx_id%></td>
+                                
+                                
                                 <%if(items.status == 0){%>
+                                  <td></td>
+                                  <td></td>
+                                  <td><%=items.investasi.toLocaleString()%></td>
                                   <td><a href="payment-confirm/<%=items.tx_id%>">Confirm</a></td>
                                   <%}else if(items.status == 1){%>
+                                    <td></td>
+                                    <td></td>
+                                    <td><%=items.investasi.toLocaleString()%></td>
                                     <td>Waiting Confirm</td>
                                     <%}else if(items.status == 2){%>
+                                      <td><%=items.date%>
+                                      </td>
+                                      <td><%=items.jatuh_tempo%></td>
+                                      <td><%=items.investasi.toLocaleString()%></td>
                                       <td>Running..</td>
                                       <%}else if(items.status == 3){%>
                                         <td>Failed</td>
                                         <%}else{%>
+                                          <td>Expired</td>
+
+                                          <td>Expired</td>
+                                          <td><%=items.investasi.toLocaleString()%></td>
                                           <td>Expired</td>
                                           <%}%>
                               </tr>

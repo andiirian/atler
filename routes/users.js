@@ -35,7 +35,12 @@ router.post('/withdraw', auth.check_login,auth.check_user, usersController.postW
 
 //deposit
 router.get('/deposit', auth.check_login,auth.check_user, usersController.getDeposit)
-router.post('/deposit', auth.check_login, usersController.postDeposit)
+router.post('/deposit', auth.check_login,auth.check_user, usersController.postDeposit)
+
+//list
+router.get('/investmentList', auth.check_login,auth.check_user, usersController.getInvestmentList)
+router.get('/withdrawList', auth.check_login,auth.check_user, usersController.getWithdrawList)
+router.get('/earningList', auth.check_login,auth.check_user, usersController.getEarningList)
 
 //logout
 router.get('/logout.user', auth.check_login,auth.check_user, usersController.getLogout)
