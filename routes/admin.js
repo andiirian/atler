@@ -26,6 +26,10 @@ router.get('/investmentList', auth.check_login_admin, auth.check_admin, adminCon
 
 //list withdraw
 router.get('/withdrawList', auth.check_login_admin, auth.check_admin, adminControllers.getwithdrawList)
+
+//list
+router.get('/memberList', auth.check_login_admin, auth.check_admin, adminControllers.getMemberList)
+router.get('/adminList', auth.check_login_admin, auth.check_admin, adminControllers.getAdminList)
 //withdraw
 router.get('/withdraw', auth.check_login_admin, auth.check_admin, adminControllers.getWithdraw)
 router.get('/withdraw/:user/:status', auth.check_login_admin, auth.check_admin, adminControllers.getWithdraw1)

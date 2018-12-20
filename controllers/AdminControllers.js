@@ -1,6 +1,6 @@
 var db = require('../models/models')
 var passwordhash = require('password-hash')
-
+var session_store;
 module.exports = {
 
     getDashboard: (req, res, next) =>{
@@ -188,6 +188,25 @@ module.exports = {
         session_store = req.session
         db.query('SELECT * FROM tbl_withdraw WHERE status = 1 OR status = 2', (err, result) =>{
             res.render('admin/withdrawList', {data: result, user: session_store.nama})
+        })
+    },
+
+    getMemberList: (req, res, next) =>{
+        session_store = req.session
+        db.query("SELECT username, nama, email, contact, date FROM users WHERE ?",{status: 0}, (err, result)=>{
+            if (err) {
+                throw err
+            }
+            res.render('admin/memberList', {result: result, user: session_store.username})
+        })
+    },
+    getAdminList: (req, res, next) =>{
+        session_store = req.session
+        db.query("SELECT username, nama, email, contact, date FROM users WHERE ?",{status: 1}, (err, result)=>{
+            if (err) {
+                throw err
+            }
+            res.render('admin/adminList', {result: result, user: session_store.username})
         })
     },
 
