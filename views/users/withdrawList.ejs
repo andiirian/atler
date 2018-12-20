@@ -149,7 +149,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Withdraw
+        Withdraw List
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
@@ -181,19 +181,19 @@
                                 </thead>
                                 <tbody>
                                   <%result.forEach(function(items){%>
-                                <tr>
-                                  <td><%=items.date%></td>
-                                  <td><%=items.withdraw%>
-                                  </td>
-                                  <td><%=items.id_trx%></td>
-                                  <%if(items.status == 0){%>
-                                    <td>Pending</td>
-                                    <%}else if(items.status == 1){%>
-                                      <td>Sukses</td>
-                                      <%}else if(items.status == 2){%>
-                                        <td>Failed</td>
-                                        <%}%>
-                                </tr>
+                                    <tr>
+                                        <td><%=items.date%></td>
+                                        <td><%=items.withdraw%>
+                                        </td>
+                                        <td><%=items.id_trx%></td>
+                                        <%if(items.status == 0){%>
+                                          <td><span class="label label-warning">Pending</span></td>
+                                          <%}else if(items.status == 1){%>
+                                            <td><span class="label label-success">Success/span></td>
+                                            <%}else if(items.status == 2){%>
+                                              <td><span class="label label-danger">Failed</span></td>
+                                              <%}%>
+                                      </tr>
                                 <%})%>
                                 </tbody>
                                 <tfoot>

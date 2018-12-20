@@ -268,14 +268,17 @@
                                     <td><%=items.tx_id%></td>
                                     <td><%=items.date%>
                                     </td>
-                                    <td><%=items.jatuh_tempo%></td>
-                                    <td><%=items.investasi.toLocaleString()%></td>
+                                    
                                    
                                    
                                     
                                         <%if(items.status == 2){%>
-                                          <td>Running..</td>
+                                          <td><%=items.jatuh_tempo%></td>
+                                    <td><%=items.investasi.toLocaleString()%></td>
+                                          <td><Span class="label label-info">Running</Span></td>
                                             <%}else{%>
+                                              <td>Expired</td>
+                                              <td>Expired</td>
                                               <td>Expired</td>
                                               <%}%>
                                   </tr>

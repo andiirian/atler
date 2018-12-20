@@ -261,11 +261,11 @@
                                   </td>
                                   <td><%=items.id_trx%></td>
                                   <%if(items.status == 0){%>
-                                    <td>Waiting Confirm For Admin</td>
+                                    <td><span class="label label-warning">Pending</span></td>
                                     <%}else if(items.status == 1){%>
-                                      <td>Sukses</td>
+                                      <td><span class="label label-success">Success/span></td>
                                       <%}else if(items.status == 2){%>
-                                        <td>Failed</td>
+                                        <td><span class="label label-danger">Failed</span></td>
                                         <%}%>
                                 </tr>
                                 <%})%>

@@ -289,15 +289,15 @@
                                     <td></td>
                                     <td></td>
                                     <td><%=items.investasi.toLocaleString()%></td>
-                                    <td>Waiting Confirm</td>
+                                    <td><span class="label label-warning">Waiting Confirm</span></td>
                                     <%}else if(items.status == 2){%>
                                       <td><%=items.date%>
                                       </td>
                                       <td><%=items.jatuh_tempo%></td>
                                       <td><%=items.investasi.toLocaleString()%></td>
-                                      <td>Running..</td>
+                                      <td><span class="label label-info">Running</span></td>
                                       <%}else if(items.status == 3){%>
-                                        <td>Failed</td>
+                                        <span class="label label-danger">Failed</span>
                                         <%}else{%>
                                           <td>Expired</td>
 

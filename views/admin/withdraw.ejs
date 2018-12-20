@@ -182,7 +182,12 @@
                                                               <td><%=items.bank%></td>
                                                               <td><%=items.norek%></td>
                                                               <td><%=items.withdraw%></td>
-                                                              <td><a href="withdraw/<%=items.user%>/1">Konfirmasi</a> | <a href="withdraw/<%=items.user%>/2">Tolak</a></td>
+                                                              <td>
+                                                                <div class="bt-group">
+                                                                  <a type="button" class="btn btn-success" href="withdraw/<%=items.user%>/1"> konfirmasi</a>
+                                                                  <a type="button" class="btn btn-danger" href="withdraw/<%=items.user%>/2"> Tolak </a>
+                                                                </div>
+                                                               </td>
                                                             </tr>
                                                             <%})%>
                                                             </tbody>
@@ -243,9 +248,9 @@
                                                               <td><%=items.norek%></td>
                                               <td><%=items.withdraw%></td>
                                               <%if(items.status == 1){%>
-                                                <td>Sukses</td>
+                                                <td> <span class="label label-success">Success</span></td>
                                                 <%}else if(items.status == 2){%>
-                                                    <td>Ditolak</td>
+                                                    <td><span class="label label-danger">Failed</span></td>
                                                     <%}%>
                                             </tr>
                                             <%})%>

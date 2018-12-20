@@ -234,24 +234,36 @@
                                 <%result.forEach(function(items){%>
 
                                 
-                              <tr>
-                                <td><%=items.id%></td>
-                                <td><%=items.date%>
-                                </td>
-                                <td><%=items.jatuh_tempo%></td>
-                                <td><%=items.investasi%></td>
-                                <%if(items.status == 0){%>
-                                  <td><a href="payment-confirm/<%=items.tx_id%>">Confirm</a></td>
-                                  <%}else if(items.status == 1){%>
-                                    <td>Waiting Confirm</td>
-                                    <%}else if(items.status == 2){%>
-                                      <td>Running..</td>
-                                      <%}else if(items.status == 3){%>
-                                        <td>Failed</td>
-                                        <%}else{%>
-                                          <td>Expired</td>
-                                          <%}%>
-                              </tr>
+                                  <tr>
+                                      <td><%=items.tx_id%></td>
+                                      
+                                      
+                                      <%if(items.status == 0){%>
+                                        <td></td>
+                                        <td></td>
+                                        <td><%=items.investasi.toLocaleString()%></td>
+                                        <td><a href="payment-confirm/<%=items.tx_id%>">Confirm</a></td>
+                                        <%}else if(items.status == 1){%>
+                                          <td></td>
+                                          <td></td>
+                                          <td><%=items.investasi.toLocaleString()%></td>
+                                          <td><span class="label label-warning">Waiting Confirm</span></td>
+                                          <%}else if(items.status == 2){%>
+                                            <td><%=items.date%>
+                                            </td>
+                                            <td><%=items.jatuh_tempo%></td>
+                                            <td><%=items.investasi.toLocaleString()%></td>
+                                            <td><span class="label label-info">Running</span></td>
+                                            <%}else if(items.status == 3){%>
+                                              <span class="label label-danger">Failed</span>
+                                              <%}else{%>
+                                                <td>Expired</td>
+      
+                                                <td>Expired</td>
+                                                <td><%=items.investasi.toLocaleString()%></td>
+                                                <td>Expired</td>
+                                                <%}%>
+                                    </tr>
                               <%})%>
                              
                               
