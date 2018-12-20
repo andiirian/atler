@@ -235,35 +235,43 @@
 
                                 
                                   <tr>
+                                
+                                
+                                
+                                    <%if(items.status == 0){%>
                                       <td><%=items.tx_id%></td>
-                                      
-                                      
-                                      <%if(items.status == 0){%>
+                                      <td></td>
+                                      <td></td>
+                                      <td><%=items.investasi.toLocaleString()%></td>
+                                      <td><a href="payment-confirm/<%=items.tx_id%>">Confirm</a></td>
+                                      <%}else if(items.status == 1){%>
+                                        <td><%=items.tx_id%></td>
                                         <td></td>
                                         <td></td>
                                         <td><%=items.investasi.toLocaleString()%></td>
-                                        <td><a href="payment-confirm/<%=items.tx_id%>">Confirm</a></td>
-                                        <%}else if(items.status == 1){%>
-                                          <td></td>
-                                          <td></td>
+                                        <td><span class="label label-warning">Waiting Confirm</span></td>
+                                        <%}else if(items.status == 2){%>
+                                          <td><%=items.tx_id%></td>
+                                          <td><%=items.date%>
+                                          </td>
+                                          <td><%=items.jatuh_tempo%></td>
                                           <td><%=items.investasi.toLocaleString()%></td>
-                                          <td><span class="label label-warning">Waiting Confirm</span></td>
-                                          <%}else if(items.status == 2){%>
-                                            <td><%=items.date%>
-                                            </td>
-                                            <td><%=items.jatuh_tempo%></td>
-                                            <td><%=items.investasi.toLocaleString()%></td>
-                                            <td><span class="label label-info">Running</span></td>
-                                            <%}else if(items.status == 3){%>
-                                              <span class="label label-danger">Failed</span>
-                                              <%}else{%>
-                                                <td>Expired</td>
-      
-                                                <td>Expired</td>
-                                                <td><%=items.investasi.toLocaleString()%></td>
-                                                <td>Expired</td>
-                                                <%}%>
-                                    </tr>
+                                          <td><span class="label label-info">Running</span></td>
+                                          <%}else if(items.status == 3){%>
+                                            <td><%=items.tx_id%></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td><%=items.investasi.toLocaleString()%></td>
+                                         <td> <span class="label label-danger">Failed</span></td>
+                                            <%}else{%>
+                                              <td><%=items.tx_id%></td>
+                                              <td>Expired</td>
+    
+                                              <td>Expired</td>
+                                              <td><%=items.investasi.toLocaleString()%></td>
+                                              <td>Expired</td>
+                                              <%}%>
+                                  </tr>
                               <%})%>
                              
                               

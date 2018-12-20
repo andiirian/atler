@@ -469,20 +469,27 @@ module.exports = {
                bukti_transaksi: '/images/bukti/'+ req.file.filename,
                status: 0
            }
-
-           db.query('INSERT INTO tbl_payment set ?', data,(err) =>{
-              if (err) {
-                  throw err
-              }
-
-              db.query('UPDATE tbl_investasi set ? WHERE ? ', [{status: 1}, {tx_id: req.body.tx_id}], (err) =>{
-                  if (err) {
-                      throw err
-                  }
-                  res.redirect('/users/dashboard')
-              })
-           })   
-           
+           db.query("SELECT dana FROM tbl_deposit WHERE ? ",{id: data.tx_id},(err, result) =>{
+               if (err) {
+                   throw err
+               }
+               if (result[0].dana != data.investasi) {
+                   res.redirect("/users/dashboard")
+               }else{
+                db.query('INSERT INTO tbl_payment set ?', data,(err) =>{
+                    if (err) {
+                        throw err
+                    }
+      
+                    db.query('UPDATE tbl_investasi set ? WHERE ? ', [{status: 1}, {tx_id: req.body.tx_id}], (err) =>{
+                        if (err) {
+                            throw err
+                        }
+                        res.redirect('/users/dashboard')
+                    })
+                 })
+               }
+           } )  
          });
        }
 

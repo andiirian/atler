@@ -184,25 +184,28 @@
                                 <%result.forEach(function(items){%>
 
                                 
-                              <tr>
-                                <td><%=items.tx_id%></td>
-                                
+                                  <% if(items.status == 2){%>
+                                    <tr>      
+                                          
+                                            <td><%=items.tx_id%></td>
+                                            <td><%=items.date%>
+                                            </td>
+                                            <td><%=items.jatuh_tempo%></td>
+                                            <td><%=items.pendapatan%></td>
+                                            <td><span class="label label-info">Running</span></td>
+                                          </tr>
+                                           
+                                              <%}else if(items.status == 4){%>
+                                                <tr>
+                                                <td><%=items.tx_id%></td>
+                                                <td>Expired</td>
+      
+                                                <td>Expired</td>
+                                                <td><%=items.pendapatan%></td>
+                                                <td>Expired</td>
+                                              </tr>
+                                                <%}%>
                                     
-                                    <% if(items.status == 2){%>
-                                      <td><%=items.date%>
-                                      </td>
-                                      <td><%=items.jatuh_tempo%></td>
-                                      <td><%=items.pendapatan%></td>
-                                      <td><span class="label label-info">Running</span></td>
-                                     
-                                        <%}else if(items.status == 4){%>
-                                          <td>Expired</td>
-
-                                          <td>Expired</td>
-                                          <td><%=items.pendapatan%></td>
-                                          <td>Expired</td>
-                                          <%}%>
-                              </tr>
                               <%})%>
                              
                               
