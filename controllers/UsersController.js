@@ -66,7 +66,7 @@ module.exports = {
         session_store = req.session
         db.query('SELECT password, nama, status FROM users WHERE ? ', {username: req.body.username}, (err, row)=> {
             if (row.length == 0) {
-                res.render('users/login',{message: "username is not ready exist."})
+                res.render('users/login',{message: "username is not ready exist.",csrfToken: req.csrfToken()})
             }else{
                 
                 if (passwordhash.verify(req.body.password, row[0].password)) {

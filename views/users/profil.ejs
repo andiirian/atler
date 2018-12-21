@@ -204,7 +204,8 @@
                     <%if(result[0].norek == null){%>
                       <input name="norek" type="text" class="form-control required"  placeholder="Norek">
                       <%}else{%>
-                        <input disabled value="<%=result[0].norek%>" name="norek" type="text" class="form-control required"  placeholder="Norek">
+                        <input disabled value="<%=result[0].norek%>" type="text" class="form-control required"  placeholder="Norek">
+                        <input value="<%=result[0].norek%>" name="norek" type="hidden" class="form-control"  placeholder="Norek">
                         <%}%>
                   </div>
                   <div class="form-group col-md-6">
@@ -213,6 +214,7 @@
                       <input name="bank" type="text" class="form-control required"  placeholder="Bank">
                       <%}else{%>
                         <input disabled value="<%=result[0].bank%>" type="text" class="form-control required"  placeholder="Bank">
+                        <input value="<%=result[0].bank%>" type="hidden" name="bank" class="form-control required"  placeholder="Bank">
                         <%}%>
                   </div>
               </div>
@@ -242,7 +244,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <strong>Copyright &copy; 2018 <p>Alphatrade</p>.</strong> All rights
     reserved.
   </footer>
 
