@@ -17,6 +17,13 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="/index/dist/css/skins/_all-skins.min.css">
+  <style>
+    .error{
+        color: red;
+      }
+   </style>
+   <script type="text/javascript" src="/index/plugins/Validate/jquery.min.js"></script>
+   <script type="text/javascript" src="/index/plugins/Validate/jquery.validate.min.js"></script>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -172,30 +179,35 @@
             <div class="box-header with-border">
               <h3 class="box-title">Register</h3>
             </div>
+            
             <!-- /.box-header -->
             <!-- form start -->
-            <form action="" method="POST">
+            <form action="" method="POST" id="register">
               <div class="box-body">
+                  <% if(message != null){ message.forEach(function(items){ %>
+                    <p class="error"><%=items%></p>
+                <%  })} %>
                 <div class="form-group col-md-12">
-                    <label for="inputEmail4">Full Name</label>
-                    <input name="nama" value="" type="text" class="form-control" id="inputEmail4" placeholder="Fullname">
+                    <label >Full Name</label>
+                    <input name="nama" value="" type="text" class="form-control required"  placeholder="Fullname">
                   </div>
                 <div class="form-group col-md-6">
-                    <label for="inputEmail4">Email</label>
-                    <input name="email" value="" type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                    <label >Email</label>
+                    <input name="email" value="" type="email" class="form-control required"  placeholder="Email">
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="inputPassword4">Contact</label>
-                    <input value="" name="contact" type="text"  class="form-control" id="inputPassword4" placeholder="Contact">
+                    <label>Contact</label>
+                    <input value="" name="contact" type="text"  class="form-control required" placeholder="Contact">
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="inputEmail4">username</label>
-                    <input name="username" type="text" class="form-control"value="" id="inputEmail4" placeholder="username">
+                    <label>username</label>
+                    <input name="username" type="text" class="form-control required"value=""  placeholder="username">
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="inputPassword4">Password</label>
-                    <input name="password" type="password" class="form-control" id="inputPassword4" placeholder="Password">
-                  </div>          
+                    <label>Password</label>
+                    <input name="password" type="password" class="form-control required" placeholder="Password">
+                  </div>    
+                  <input type="hidden" name="_csrf" value="<%=csrfToken%>">      
               </div>
               <!-- /.box-body -->
 
@@ -237,9 +249,11 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
-<script src="/index/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="/index/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#register").validate();
+})
+</script>
 <!-- DataTables -->
 <!-- SlimScroll -->
 

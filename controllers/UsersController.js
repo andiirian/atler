@@ -60,7 +60,7 @@ module.exports = {
 
     //login
     getLogin: (req, res, next) =>{
-        res.render('users/login',{message: null});
+        res.render('users/login',{message: null, csrfToken: req.csrfToken()});
     },
     postLogin: (req, res, next) =>{
         session_store = req.session
@@ -85,10 +85,10 @@ module.exports = {
 
     //register
     getRegister: (req, res, next) =>{
-        res.render('users/register',{ref: null, message: null})
+        res.render('users/register',{ref: null, message: null, csrfToken: req.csrfToken()})
     },
     getRegisterRef: (req, res, next) =>{
-        res.render('users/register', {ref: req.params.ref,message: null})
+        res.render('users/register', {ref: req.params.ref,message: null,  csrfToken: req.csrfToken()})
     },
     postRegister: (req, res, next) =>{
         session_store = req.session
@@ -141,7 +141,7 @@ module.exports = {
             }
         })
             }else{ 
-                res.render('users/register',{ref: req.body.ref, message: message})
+                res.render('users/register',{ref: req.body.ref, message: message,csrfToken: req.csrfToken()})
             }
         })
 
@@ -202,7 +202,7 @@ module.exports = {
         session_store = req.session;
         db.query('SELECT * FROM users WHERE ?', {username: session_store.username}, (err, result) =>{
            
-            res.render('users/profil',{result: result, user: session_store.nama})
+            res.render('users/profil',{result: result, user: session_store.nama, csrfToken: req.csrfToken()})
         })
         
     },
@@ -278,7 +278,7 @@ module.exports = {
             })
             .then(result=>{
                 data.push(result)
-                res.render('users/withdraw', {result: data, user: session_store.nama})
+                res.render('users/withdraw', {result: data, user: session_store.nama, csrfToken: req.csrfToken()})
                 
             })
 
@@ -348,7 +348,7 @@ module.exports = {
     getDeposit: (req, res, next) =>{
         db.query(`SELECT *, DATE_ADD(date, INTERVAL 124 DAY) AS jatuh_tempo FROM tbl_investasi WHERE ?`, {user: session_store.username}, (err, result) =>{
             if(err) reject(err)
-            res.render('users/deposit',{result: result, user: session_store.nama})
+            res.render('users/deposit',{result: result, user: session_store.nama, csrfToken: req.csrfToken()})
         })
 
         
@@ -428,7 +428,7 @@ module.exports = {
                 if (row.length == 0 || row[0].status > 0) {
                     res.redirect('/users/dashboard')
                 }else{
-                    res.render('users/paymentConfirm', {result: row, user: session_store.nama})
+                    res.render('users/paymentConfirm', {result: row, user: session_store.nama, csrfToken: req.csrfToken()})
                 }
 
             }

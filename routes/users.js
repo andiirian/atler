@@ -2,40 +2,41 @@ var express = require('express');
 var router = express.Router();
 var usersController = require('../controllers/UsersController')
 var auth = require('../Middleware/auth')
-
+var csrf = require('csurf')
+var csrfProtection = csrf({ cookie: true })
 /* GET users listing. */
 //login
-router.get('/login', usersController.getLogin);
-router.post('/login', usersController.postLogin);
+router.get('/login', csrfProtection, usersController.getLogin, );
+router.post('/login', csrfProtection, usersController.postLogin);
 
 //register
-router.get('/register', usersController.getRegister);
-router.get('/register/:ref',usersController.getRegisterRef);
-router.post('/register', usersController.postRegister)
+router.get('/register', csrfProtection,usersController.getRegister);
+router.get('/register/:ref',csrfProtection,usersController.getRegisterRef);
+router.post('/register', csrfProtection,usersController.postRegister)
 
 //dashboard
 router.get('/dashboard',auth.check_login,auth.check_user, usersController.getDashboard)
 
 //profil
-router.get('/profil',auth.check_login,auth.check_user, usersController.getProfil)
-router.post('/profil',auth.check_login,auth.check_user, usersController.postProfil)
+router.get('/profil',auth.check_login,auth.check_user,csrfProtection, usersController.getProfil)
+router.post('/profil',auth.check_login,auth.check_user,csrfProtection, usersController.postProfil)
 
 //referrals
 router.get('/referrals',auth.check_login,auth.check_user, usersController.getRef)
 
 //pembayaran
 router.get('/payment-information',auth.check_login,auth.check_user, usersController.getPaymentInformation)
-router.get('/payment-confirm/:id',auth.check_login,auth.check_user, usersController.getPaymentConfirm)
-router.post('/payment-confirm/:id',auth.check_login,auth.check_user, usersController.postPaymentConfirm)
+router.get('/payment-confirm/:id',auth.check_login,auth.check_user,csrfProtection, usersController.getPaymentConfirm)
+router.post('/payment-confirm/:id',auth.check_login,auth.check_user,csrfProtection, usersController.postPaymentConfirm)
 
 
 
-router.get('/withdraw', auth.check_login,auth.check_user, usersController.getWithdraw)
-router.post('/withdraw', auth.check_login,auth.check_user, usersController.postWithdraw)
+router.get('/withdraw', auth.check_login,auth.check_user,csrfProtection, usersController.getWithdraw)
+router.post('/withdraw', auth.check_login,auth.check_user,csrfProtection, usersController.postWithdraw)
 
 //deposit
-router.get('/deposit', auth.check_login,auth.check_user, usersController.getDeposit)
-router.post('/deposit', auth.check_login,auth.check_user, usersController.postDeposit)
+router.get('/deposit', auth.check_login,auth.check_user,csrfProtection, usersController.getDeposit)
+router.post('/deposit', auth.check_login,auth.check_user,csrfProtection, usersController.postDeposit)
 
 //list
 router.get('/investmentList', auth.check_login,auth.check_user, usersController.getInvestmentList)

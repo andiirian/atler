@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var adminControllers = require('../controllers/AdminControllers')
 var auth    = require('../Middleware/auth')
+var csrf = require('csurf')
+var csrfProtection = csrf({ cookie: true })
 /* GET home page. */
 router.get('/dashboard',auth.check_login_admin,auth.check_admin, adminControllers.getDashboard);
 
@@ -10,12 +12,12 @@ router.get('/profil', auth.check_login_admin,auth.check_admin, adminControllers.
 router.post('/profil', auth.check_login_admin,auth.check_admin, adminControllers.postProfil)
 
 //login
-router.get('/login', adminControllers.getLogin)
-router.post('/login', adminControllers.postLogin)
+router.get('/login',csrfProtection, adminControllers.getLogin)
+router.post('/login',csrfProtection, adminControllers.postLogin)
 
 //register
-router.get('/register', auth.check_login_admin, auth.check_admin, adminControllers.getRegister)
-router.post('/register', auth.check_login_admin, auth.check_admin, adminControllers.postRegister)
+router.get('/register', auth.check_login_admin, auth.check_admin,csrfProtection, adminControllers.getRegister)
+router.post('/register', auth.check_login_admin, auth.check_admin,csrfProtection, adminControllers.postRegister)
 
 //deposit
 router.get('/investment', auth.check_login_admin, auth.check_admin, adminControllers.getDeposit)

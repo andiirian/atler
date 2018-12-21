@@ -28,13 +28,13 @@ module.exports = {
 
     //Login
     getLogin: (req, res, next) =>{
-        res.render('admin/login',{message: null})
+        res.render('admin/login',{message: null, csrfToken: req.csrfToken()})
     },
     postLogin: (req, res, next) =>{
         session_store = req.session
         db.query('SELECT password, nama, status FROM users WHERE ? AND ? ', [{username: req.body.username}, {status: 1}], (err, row)=> {
             if (row.length == 0) {
-                res.render('admin/login',{message: "username is not ready exist."})
+                res.render('admin/login',{message: "username is not ready exist.",csrfToken: req.csrfToken()})
             }else{
                 
                 if (passwordhash.verify(req.body.password, row[0].password)) {
@@ -44,7 +44,7 @@ module.exports = {
                   session_store.status = row[0].status
                   res.redirect('/admin/dashboard')
                 }else{
-                    res.render('admin/login', {message: "password is wrong"})
+                    res.render('admin/login', {message: "password is wrong",csrfToken: req.csrfToken()})
                 }
             }
         })
@@ -52,23 +52,58 @@ module.exports = {
 
     //register
     getRegister: (req, res, next) =>{
-        res.render('admin/register',{user: session_store.nama});
+        res.render('admin/register',{user: session_store.nama, message: null, csrfToken: req.csrfToken()});
     },
     postRegister: (req, res, next) =>{
-        var data = {
+        session_store = req.session
+        var message = [];
+       const promiseA  = new Promise((resolve, reject) => {
+           db.query("SELECT username FROM users WHERE ?", {username: req.body.username}, (err, result)=>{
+               if (result.length != 0 ) {
+                    resolve("username is a ready exist")          
+                           // message = "username is a ready exist"      
+                }
+                    resolve(null)                
+           })
+       })
+       const promiseB = new Promise((resolve, reject) =>{
+        db.query("SELECT email FROM users WHERE ? ",{email: req.body.email},(err, result) =>{
+                    if (result.length != 0) {
+                        resolve("email is a ready exist")    
+                    }
+                    resolve(null)  
+                })
+
+       })
+
+       promiseA
+        .then((text)=>{
+            message.push(text);
+            return promiseB
+        })
+        .then((text)=> {
+            message.push(text)
+            if (message[0] == null && message[1] == null) {
+           var data = {
             username: req.body.username,
             nama    : req.body.nama,
             email   : req.body.email,
             password: passwordhash.generate(req.body.password),
-            contact: req.body.contact,
-            status  : 1
+            
+            status: 1
         }
-
-        db.query('INSERT INTO users set ? ',data, (err) =>{
+       
+        db.query('insert into users set ?', data, (err, field) =>{
             if (err) {
                 throw err
+            }else{
+              
+              res.redirect('/admin/dashboard')
             }
-            res.redirect('/admin/dashboard')
+        })
+            }else{ 
+                res.render('admin/register',{user: session_store.username, message: message,csrfToken: req.csrfToken()})
+            }
         })
     },
     getDeposit: (req, res, next) =>{
