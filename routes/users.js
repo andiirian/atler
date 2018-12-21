@@ -26,8 +26,8 @@ router.get('/referrals',auth.check_login,auth.check_user, usersController.getRef
 
 //pembayaran
 router.get('/payment-information',auth.check_login,auth.check_user, usersController.getPaymentInformation)
-router.get('/payment-confirm/:id',auth.check_login,auth.check_user,csrfProtection, usersController.getPaymentConfirm)
-router.post('/payment-confirm/:id',auth.check_login,auth.check_user,csrfProtection, usersController.postPaymentConfirm)
+router.get('/payment-confirm/:id',auth.check_login,auth.check_user, usersController.getPaymentConfirm)
+router.post('/payment-confirm/:id',auth.check_login,auth.check_user, usersController.postPaymentConfirm)
 
 
 

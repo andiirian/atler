@@ -428,7 +428,7 @@ module.exports = {
                 if (row.length == 0 || row[0].status > 0) {
                     res.redirect('/users/dashboard')
                 }else{
-                    res.render('users/paymentConfirm', {result: row, user: session_store.nama, csrfToken: req.csrfToken()})
+                    res.render('users/paymentConfirm', {result: row, user: session_store.nama})
                 }
 
             }

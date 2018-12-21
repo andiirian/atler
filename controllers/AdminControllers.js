@@ -136,7 +136,7 @@ module.exports = {
                 if (err) {
                     throw err
                 }
-                db.query(`UPDATE tbl_investasi set status = 3 WHERE ?`, {tx_id: req.params.tx_id}, (err) =>{
+                db.query(`UPDATE tbl_investasi set status = 3, investasi = 0 WHERE ?`, {tx_id: req.params.tx_id}, (err) =>{
                     if (err) {
                         throw err
                     }
@@ -167,11 +167,11 @@ module.exports = {
     },
     getWithdraw1: (req, res, next) =>{
         if (req.params.status == 1) {
-            db.query(`UPDATE tbl_withdraw set status = ${req.params.status} WHERE ? `, {user: req.params.user}, (err) =>{
+            db.query(`UPDATE tbl_withdraw set status = ${req.params.status} WHERE ? `, {id_trx: req.params.id_trx}, (err) =>{
                 res.redirect('/admin/withdraw')
             })
         }else if(req.params.status == 2){
-            db.query(`UPDATE tbl_withdraw set status = ${req.params.status} WHERE ? `, {user: req.params.user}, (err) =>{
+            db.query(`UPDATE tbl_withdraw set status = ${req.params.status} WHERE ? `, {id_trx: req.params.id_trx}, (err) =>{
                 res.redirect('/admin/withdraw')
             })
         }else{

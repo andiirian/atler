@@ -34,7 +34,7 @@ router.get('/memberList', auth.check_login_admin, auth.check_admin, adminControl
 router.get('/adminList', auth.check_login_admin, auth.check_admin, adminControllers.getAdminList)
 //withdraw
 router.get('/withdraw', auth.check_login_admin, auth.check_admin, adminControllers.getWithdraw)
-router.get('/withdraw/:user/:status', auth.check_login_admin, auth.check_admin, adminControllers.getWithdraw1)
+router.get('/withdraw/:id_trx/:status', auth.check_login_admin, auth.check_admin, adminControllers.getWithdraw1)
 
 router.get('/logout.admin',auth.check_login_admin, auth.check_admin, adminControllers.getLogout)
 module.exports = router;
