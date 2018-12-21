@@ -157,7 +157,31 @@
         <li class="active">Withdraw</li>
       </ol>
     </section>
+    <%if(result[1][0].norek == null || result[1][0].bank == null){%>
+    <section class="content">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="box box-default">
+            <div class="box-header with-border">
+              <i class="fa fa-warning"></i>
 
+              <h3 class="box-title">Alerts</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Perhatian!</h4>
+               Tolong, Selesaikan Terlebih Dahulu Pengisian Bank Dan Norek Anda Di Menu Profil! 
+              </div>
+              
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+    </section>
+    <%}else{%>
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
@@ -175,7 +199,7 @@
                  
              <div class="form-group">
                <label for="exampleInputEmail1">Bank</label>
-               <input disabled type="text" value="BRI" class="form-control" id="exampleInputEmail1" placeholder="No.Rek">
+               <input disabled type="text" value="<%=result[1][0].bank%>" class="form-control" id="exampleInputEmail1" placeholder="No.Rek">
              </div>
              <div class="form-group">
                 <label for="exampleInputEmail1">No.Rek</label>
@@ -207,7 +231,7 @@
                 </div>
                 <div class="form-group">
                    
-                    <input type="hidden" name="bank" value="BRI" class="form-control">
+                    <input type="hidden" name="bank" value="<%=result[1][0].bank%>" class="form-control">
                   </div>
                   <div class="form-group">
                      
@@ -231,6 +255,7 @@
       <!-- /.row (main row) -->
 
     </section>
+    <%}%>
 
 
     <!-- /.content -->
@@ -263,7 +288,7 @@
                                   <%if(items.status == 0){%>
                                     <td><span class="label label-warning">Pending</span></td>
                                     <%}else if(items.status == 1){%>
-                                      <td><span class="label label-success">Success/span></td>
+                                      <td><span class="label label-success">Success</span></td>
                                       <%}else if(items.status == 2){%>
                                         <td><span class="label label-danger">Failed</span></td>
                                         <%}%>

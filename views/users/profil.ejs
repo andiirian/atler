@@ -201,10 +201,18 @@
                   </div>
                   <div class="form-group col-md-6">
                     <label for="">Norek</label>
-                    <%if(result[0].norek == ""){%>
+                    <%if(result[0].norek == null){%>
                       <input name="norek" type="text" class="form-control required"  placeholder="Norek">
                       <%}else{%>
                         <input disabled value="<%=result[0].norek%>" name="norek" type="text" class="form-control required"  placeholder="Norek">
+                        <%}%>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="">Bank</label>
+                    <%if(result[0].bank == null){%>
+                      <input name="bank" type="text" class="form-control required"  placeholder="Bank">
+                      <%}else{%>
+                        <input disabled value="<%=result[0].bank%>" type="text" class="form-control required"  placeholder="Bank">
                         <%}%>
                   </div>
               </div>

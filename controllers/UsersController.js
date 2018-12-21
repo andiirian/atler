@@ -76,7 +76,7 @@ module.exports = {
                   session_store.status = row[0].status
                   res.redirect('/users/dashboard')
                 }else{
-                    res.render('users/login', {message: "password is wrong."})
+                    res.render('users/login', {message: "password is wrong.", csrfToken: req.csrfToken()})
                 }
             }
         })
@@ -213,7 +213,8 @@ module.exports = {
                 {
                     nama: req.body.nama,
                     contact: req.body.contact,
-                    norek: req.body.norek
+                    norek: req.body.norek,
+                    bank: req.body.bank
                     
                 },
                 {
@@ -231,7 +232,8 @@ module.exports = {
                 nama: req.body.nama,
                 contact: req.body.contact,
                 norek: req.body.norek,
-                password: passwordhash.generate(req.body.password)
+                password: passwordhash.generate(req.body.password),
+                bank: req.body.bank
             },
             {
                 username: session_store.username
@@ -262,7 +264,7 @@ module.exports = {
             })
         })
         const promiseBank = new Promise((resolve, reject) =>{
-            db.query("SELECT norek FROM users WHERE ? ",{username: session_store.username},(err, result) =>{
+            db.query("SELECT norek, bank FROM users WHERE ? ",{username: session_store.username},(err, result) =>{
                 if (err) {
                     throw err
                 }
