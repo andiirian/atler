@@ -6,8 +6,8 @@ var csrf = require('csurf')
 var csrfProtection = csrf({ cookie: true })
 /* GET users listing. */
 //login
-router.get('/login', csrfProtection, usersController.getLogin, );
-router.post('/login', csrfProtection, usersController.postLogin);
+router.get('/', csrfProtection, usersController.getLogin, );
+router.post('/', csrfProtection, usersController.postLogin);
 
 //register
 router.get('/register', csrfProtection,usersController.getRegister);

@@ -88,6 +88,11 @@
                 <i class="fa fa-users"></i> <span>Register Admin</span>
               </a>   
             </li>
+            <li class="">
+                <a href="event">
+                  <i class="fa fa-laptop"></i> <span>Event</span>
+                </a>   
+              </li>
             <li class="header">TRANSACTION</li>
             <li>
               <a href="investment">
@@ -181,6 +186,7 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Contact</th>
+                                    <th>Action</th>
                                   </tr>
                                   </thead>
                                   <tbody>
@@ -193,6 +199,11 @@
                                     <td><%=items.nama%></td>
                                     <td><%=items.email%></td>
                                     <td><%=items.contact%></td>
+                                    <%if(user != items.username){%>
+                                      <td><a type="button" class="btn btn-danger" href="delete/<%=items.username%>"> Delete </a></td>
+                                      <%}else{%>
+                                        <td></td>
+                                        <%}%>
                                   </tr>
                                   <%})%>
                                  
@@ -209,6 +220,7 @@
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Contact</th>
+                                            <th>Action</th>
                                                 </tr>
                                   </tfoot>
                                 </table>

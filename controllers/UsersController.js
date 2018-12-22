@@ -74,7 +74,7 @@ module.exports = {
                   session_store.username = req.body.username
                   session_store.logged_in = true;
                   session_store.status = row[0].status
-                  res.redirect('/users/dashboard')
+                  res.redirect('/dashboard')
                 }else{
                     res.render('users/login', {message: "password is wrong.", csrfToken: req.csrfToken()})
                 }
@@ -137,7 +137,7 @@ module.exports = {
               session_store.logged_in = true;
               session_store.nama = req.body.nama
               session_store.status = 0;
-              res.redirect('/users/dashboard')
+              res.redirect('/dashboard')
             }
         })
             }else{ 
@@ -224,7 +224,7 @@ module.exports = {
                 if (err) {
                     throw err
                 }
-                res.redirect('/users/profil')
+                res.redirect('/profil')
             })
         }else{
         db.query('UPDATE users set ? where ?',[
@@ -242,7 +242,7 @@ module.exports = {
             if (err) {
                 throw err
             }
-            res.redirect('/users/profil')
+            res.redirect('/profil')
         })
     }
 
@@ -330,10 +330,10 @@ module.exports = {
                           throw err
                          }
 
-                          res.redirect('/users/withdraw')
+                          res.redirect('/withdraw')
                      })
                 }else{
-                    res.redirect('/users/withdraw')
+                    res.redirect('/withdraw')
                 }
               })
              
@@ -407,8 +407,13 @@ module.exports = {
           }
 
           asy().then(()=>{
+              db.query("SELECT * FROM tbl_norek", (err, result) =>{
+                 
+                res.render('users/paymentInformation',{data: data, user: session_store.nama, result: result})
+              })
+            
           })
-          res.render('users/paymentInformation',{data: data, user: session_store.nama})
+          
         },
 
     //payment
@@ -428,7 +433,7 @@ module.exports = {
             }
             else{
                 if (row.length == 0 || row[0].status > 0) {
-                    res.redirect('/users/dashboard')
+                    res.redirect('/dashboard')
                 }else{
                     res.render('users/paymentConfirm', {result: row, user: session_store.nama})
                 }
@@ -476,7 +481,7 @@ module.exports = {
                    throw err
                }
                if (result[0].dana != data.investasi) {
-                   res.redirect("/users/dashboard")
+                   res.redirect("/dashboard")
                }else{
                 db.query('INSERT INTO tbl_payment set ?', data,(err) =>{
                     if (err) {
@@ -487,7 +492,7 @@ module.exports = {
                         if (err) {
                             throw err
                         }
-                        res.redirect('/users/dashboard')
+                        res.redirect('/dashboard')
                     })
                  })
                }
@@ -561,7 +566,7 @@ module.exports = {
             if (err) {
                 throw err
             }
-            res.redirect('/users/login')
+            res.redirect('/')
           })
     }
 }

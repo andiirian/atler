@@ -8,8 +8,8 @@ var csrfProtection = csrf({ cookie: true })
 router.get('/dashboard',auth.check_login_admin,auth.check_admin, adminControllers.getDashboard);
 
 //profil
-router.get('/profil', auth.check_login_admin,auth.check_admin, adminControllers.getProfil)
-router.post('/profil', auth.check_login_admin,auth.check_admin, adminControllers.postProfil)
+router.get('/profil', auth.check_login_admin,auth.check_admin,csrfProtection, adminControllers.getProfil)
+router.post('/profil', auth.check_login_admin,auth.check_admin,csrfProtection, adminControllers.postProfil)
 
 //login
 router.get('/login',csrfProtection, adminControllers.getLogin)
@@ -35,6 +35,11 @@ router.get('/adminList', auth.check_login_admin, auth.check_admin, adminControll
 //withdraw
 router.get('/withdraw', auth.check_login_admin, auth.check_admin, adminControllers.getWithdraw)
 router.get('/withdraw/:id_trx/:status', auth.check_login_admin, auth.check_admin, adminControllers.getWithdraw1)
+router.get('/delete/:username',auth.check_login_admin, auth.check_admin, adminControllers.getDeleteAdmin )
+
+//event
+router.get('/event', auth.check_login_admin,auth.check_admin,csrfProtection, adminControllers.getEvent)
+router.post('/event', auth.check_login_admin,auth.check_admin,csrfProtection, adminControllers.postEvent)
 
 router.get('/logout.admin',auth.check_login_admin, auth.check_admin, adminControllers.getLogout)
 module.exports = router;

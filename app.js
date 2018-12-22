@@ -20,8 +20,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret:"vsncvjxcjkvnjsgfjsfngsjgfsiudfhsjvnjgvusjhjdn"}));
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', usersRouter);
+app.use('/users', indexRouter);
 app.use('/admin', adminRouter)
 
 // catch 404 and forward to error handler

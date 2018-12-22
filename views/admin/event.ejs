@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AlphaTrade | Profil</title>
+  <title>AlphaTrade | Event</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -17,6 +17,7 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="/index/dist/css/skins/_all-skins.min.css">
+
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,6 +47,7 @@
         <span class="sr-only">Toggle navigation</span>
       </a>
 
+      
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
@@ -63,7 +65,7 @@
         </div>
       </div>
       <!-- search form -->
-    
+      
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
@@ -86,10 +88,10 @@
             </a>   
           </li>
           <li class="">
-              <a href="event">
-                <i class="fa fa-laptop"></i> <span>Event</span>
-              </a>   
-            </li>
+                <a href="event">
+                  <i class="fa fa-laptop"></i> <span>Event</span>
+                </a>   
+              </li>
           <li class="header">TRANSACTION</li>
           <li>
             <a href="investment">
@@ -107,7 +109,7 @@
             </a>
             
           </li>
-        
+          
                 <li class="header">LIST</li>
                 <li>
                     <a href="investmentList">
@@ -152,78 +154,91 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Profil
+        Event
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Profil</li>
+        <li class="active">Event</li>
       </ol>
     </section>
+    <%if(message != null){ %>
+    <section class="content">
+            <div class="row">
+                    <div class="col-md-6">
+                      <div class="box box-default">
+                        <div class="box-header with-border">
+                          <i class="fa fa-warning"></i>
+            
+                          <h3 class="box-title">Alerts</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                          
+                          <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                            <%=message%>
+                          </div>
+                        </div>
+                        <!-- /.box-body -->
+                      </div>
+                      <!-- /.box -->
+                    </div>
+    </section>
+    <%}%>
 
     <!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
-      <div class="row">
-        
-        <div class="col-md-12">
-             <!-- general form elements -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Profil</h3>
+            
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          
+          <div class="col-md-6">
+               <!-- general form elements -->
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">Profil</h3>
+              </div>
+              <!-- /.box-header -->
+              <!-- form start -->
+              <form action="" method="POST">
+                <div class="box-body">
+                    <div class="form-group required">
+                        <label>Amount</label>
+                        <select id="amount" name="event" class="form-control">
+                         
+                          <option value="0">Off</option>
+                          <option value="1">ON</option>
+                        </select>
+                      
+                      </div>
+                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                  
+                 
+                  
+                </div>
+                <!-- /.box-body -->
+  
+                <div class="box-footer">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+              </form>
             </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form action="" method="POST">
-              <div class="box-body">
-                <div class="form-group col-md-12">
-                    <label for="inputEmail4">Full Name</label>
-                    <input name="nama" value="<%=result[0].nama%>" type="text" class="form-control" id="inputEmail4" placeholder="Fullname">
-                  </div>
-                <div class="form-group col-md-6">
-                    <label for="inputEmail4">Email</label>
-                    <input disabled value="<%=result[0].email%>" type="email" class="form-control" id="inputEmail4" placeholder="Email">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputPassword4">Contact</label>
-                    <input value="<%=result[0].contact%>" name="contact" type="text"  class="form-control" id="inputPassword4" placeholder="Contact">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputEmail4">username</label>
-                    <input disabled type="text" class="form-control"value="<%=result.username%>" id="inputEmail4" placeholder="username">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputPassword4">Password</label>
-                    <input name="password" type="password" class="form-control" id="inputPassword4" placeholder="Password">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputPassword4">Norek</label>
-                    <input value="<%= result[0].norek%>" name="norek" type="text" class="form-control" id="inputPassword4" placeholder="Norek">
-                  </div>
-                  <input type="hidden" name="_csrf" value="<%=csrfToken%>">
-                
-               
-                
-              </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Save</button>
-              </div>
-            </form>
           </div>
+          <!-- ./col -->
         </div>
-        <!-- ./col -->
-      </div>
-      <!-- /.row -->
-      <!-- Main row -->
-      
-      <!-- /.row (main row) -->
-
-    </section>
+        
+        <!-- /.row -->
+        <!-- Main row -->
+        
+        <!-- /.row (main row) -->
+  
+      </section>
 
 
     <!-- /.content -->
@@ -246,11 +261,8 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
-<script src="/index/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="/index/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- DataTables -->
 
+<!-- DataTables -->
 <!-- SlimScroll -->
 
 <!-- FastClick -->
@@ -259,6 +271,8 @@
 <script src="/index/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 
-
+<script src="/index/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="/index/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

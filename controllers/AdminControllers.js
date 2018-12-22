@@ -183,7 +183,7 @@ module.exports = {
         session_store = req.session;
         db.query('SELECT * FROM users WHERE ?', {username: session_store.username}, (err, result) =>{
            
-            res.render('admin/profil',{result: result, user: session_store.nama})
+            res.render('admin/profil',{result: result, user: session_store.nama, csrfToken: req.csrfToken()})
         })
     },
     postProfil: (req, res, next) =>{
@@ -210,6 +210,27 @@ module.exports = {
        
 
     },
+    //event
+    getEvent: (req, res, next)=>{
+        session_store = req.session
+        res.render('admin/event',{user: session_store.username,message: null, csrfToken: req.csrfToken()})
+    },
+    postEvent: (req, res, next)=>{
+        db.query(`set global event_scheduler = ${req.body.event}`, (err) =>{
+            if (err) {
+                throw err
+            }
+            if (req.body.event == 0) {
+                const message = "Anda Baru saja Menonaktifkan Event!"
+                res.render('admin/event',{user: session_store.username,message: message, csrfToken: req.csrfToken()})
+            }else if(req.body.event == 1){
+                const message = "Anda Baru saja Mengaktifkan Event!"
+                res.render('admin/event',{user: session_store.username,message: message, csrfToken: req.csrfToken()})
+            }
+        })
+    },
+
+
     //investment list
     getinvestmentList: (req, res, next) =>{
         session_store = req.session
@@ -242,6 +263,21 @@ module.exports = {
                 throw err
             }
             res.render('admin/adminList', {result: result, user: session_store.username})
+        })
+    },
+
+    getDeleteAdmin: (req, res, next) =>{
+        db.query("SELECT username FROM users WHERE ? ", {username: req.params.username},(err, result) =>{
+            if (result.length == 0) {
+                res.redirect("/admin/adminList")
+            }else{
+                db.query("DELETE FROM users WHERE ? ", {username: req.params.username},(err) =>{
+                    if (err) {
+                        throw err
+                    }
+                    res.redirect('/admin/adminList')
+                })
+            }
         })
     },
 
